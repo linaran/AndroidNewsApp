@@ -1,1 +1,1 @@
-Android news app.
+Android news app!
