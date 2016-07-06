@@ -1,15 +1,22 @@
 package com.example.spidey.myapplication;
 
+import com.example.spidey.myapplication.model.json2java.Doc;
+import com.example.spidey.myapplication.presenter.Presenter;
+import com.example.spidey.myapplication.presenter.PresenterImpl;
+
+import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.List;
 
 /**
- * To work on unit tests, switch the Test Artifact in the Build Variants view.
+ * Disclaimer: I'm not fancy with writing unit test.
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    public void connectionIsCorrect() throws Exception {
+        Presenter presenter = new PresenterImpl();
+        List<Doc> docs = presenter.getDocs();
+        Assert.assertEquals(docs.size(), 10);
     }
 }
