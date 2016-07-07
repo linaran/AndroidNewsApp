@@ -12,22 +12,23 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NYTimesDataHandle {
-    private NYTimesAPI NYApiService;
+public class NYTimesServiceImpl implements NYTimesService{
+    private NYTimesAPI nyTimesAPI;
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
-    public NYTimesDataHandle() {
+    public NYTimesServiceImpl() {
         Gson gson = new GsonBuilder() //Local until further notice.
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .setDateFormat(DATE_FORMAT)
                 .create();
         Retrofit retrofit = new Retrofit.Builder() //Local until further notice.
                 .baseUrl(NYTimesAPI.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        NYApiService = retrofit.create(NYTimesAPI.class);
+        nyTimesAPI = retrofit.create(NYTimesAPI.class);
     }
 
     public List<Doc> getArticles() throws IOException {
-        Call<NYTimesResponse> call = NYApiService.getResponse();
+        Call<NYTimesResponse> call = nyTimesAPI.getResponse();
         return call.execute().body().getResponse().getDocs();
     }
 }

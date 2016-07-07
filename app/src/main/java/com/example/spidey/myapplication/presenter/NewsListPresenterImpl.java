@@ -1,17 +1,18 @@
 package com.example.spidey.myapplication.presenter;
 
+import com.example.spidey.myapplication.model.NYTimesService;
 import com.example.spidey.myapplication.model.json2java.Doc;
-import com.example.spidey.myapplication.model.NYTimesDataHandle;
+import com.example.spidey.myapplication.model.NYTimesServiceImpl;
 
 import java.io.IOException;
 import java.util.List;
 
-public class PresenterImpl implements Presenter {
+public class NewsListPresenterImpl implements NewsListPresenter {
 
-    private NYTimesDataHandle dataHandle;
+    private NYTimesService nyTimesService;
 
-    public PresenterImpl() {
-        dataHandle = new NYTimesDataHandle();
+    public NewsListPresenterImpl() {
+        nyTimesService = new NYTimesServiceImpl();
     }
 
     public List<Doc> getDocs() {
@@ -20,7 +21,7 @@ public class PresenterImpl implements Presenter {
 
         List<Doc> retValue = null;
         try {
-            retValue = dataHandle.getArticles();
+            retValue = nyTimesService.getArticles();
         } catch (IOException e) {
             //        TODO: GUI handle IOException.
             e.printStackTrace();
