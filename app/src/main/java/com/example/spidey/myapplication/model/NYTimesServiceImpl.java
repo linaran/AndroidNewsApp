@@ -9,26 +9,23 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public final class NYTimesServiceImpl implements NYTimesService{
-    private final Callback<NYTimesResponse> callback;
-    private final NYTimesAPI nyTimesAPI;
+public final class NYTimesServiceImpl implements NYTimesService {
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
+    private final NYTimesAPI nyTimesAPI;
 
-    public NYTimesServiceImpl(Callback<NYTimesResponse> callback) {
-        this.callback = callback;
-
-        Gson gson = new GsonBuilder() //Local until further notice.
+    public NYTimesServiceImpl() {
+        final Gson gson = new GsonBuilder() //Local until further notice.
                 .setDateFormat(DATE_FORMAT)
                 .create();
-        Retrofit retrofit = new Retrofit.Builder() //Local until further notice.
+        final Retrofit retrofit = new Retrofit.Builder() //Local until further notice.
                 .baseUrl(NYTimesAPI.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         nyTimesAPI = retrofit.create(NYTimesAPI.class);
     }
 
-    public void getArticles() {
-        Call<NYTimesResponse> call = nyTimesAPI.getResponse();
+    public void getArticles(final Callback<NYTimesResponse> callback) {
+        final Call<NYTimesResponse> call = nyTimesAPI.getResponse();
         call.enqueue(callback);
     }
 }

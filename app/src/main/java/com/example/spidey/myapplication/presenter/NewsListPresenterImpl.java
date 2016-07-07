@@ -15,21 +15,21 @@ import retrofit2.Response;
 
 public final class NewsListPresenterImpl implements NewsListPresenter, Callback<NYTimesResponse> {
 
-    private NYTimesService nyTimesService;
+    private final NYTimesService nyTimesService;
 
     public NewsListPresenterImpl() {
-        nyTimesService = new NYTimesServiceImpl(this);
+        nyTimesService = new NYTimesServiceImpl();
     }
 
     public void getDocs() {
 //        TODO: Start loading animation.
-        nyTimesService.getArticles(); //Begin async call.
+        nyTimesService.getArticles(this); //Begin async call.
 //        TODO: End loading animation.
     }
 
     @Override
     public void onResponse(Call<NYTimesResponse> call, Response<NYTimesResponse> response) {
-        List<Doc> documents = response.body().getResponse().getDocs();
+        final List<Doc> documents = response.body().getResponse().getDocs();
         Log.d("DOCS", documents.toString());
 //        if (documents.size() == 0) {
 ////            TODO: Do something GUI.
