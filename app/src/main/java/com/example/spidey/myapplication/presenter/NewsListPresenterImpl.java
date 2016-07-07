@@ -19,19 +19,21 @@ public final class NewsListPresenterImpl implements NewsListPresenter {
 
 //        TODO: Start loading animation.
 
-        List<Doc> retValue = null;
+        List<Doc> documents = null;
         try {
-            retValue = nyTimesService.getArticles();
+            documents = nyTimesService.getArticles();
         } catch (IOException e) {
             //        TODO: GUI handle IOException.
             e.printStackTrace();
         }
 
-//        assert retValue != null;
-//        Log.d("DATA", retValue.toString());
+        if (documents == null || documents.size() == 0) {
+            throw new NullPointerException("No data to be pulled from the endpoint.");
+        }
+//        Log.d("DATA", documents.toString());
 
 //        TODO: End loading animation.
 
-        return retValue;
+        return documents;
     }
 }
