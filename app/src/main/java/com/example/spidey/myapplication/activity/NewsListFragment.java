@@ -19,10 +19,10 @@ import butterknife.ButterKnife;
 
 public final class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NewsListView {
 
-    @BindView(R.id.swipe_refresh)
+    @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @BindView(R.id.news_list)
+    @BindView(R.id.newsList)
     ListView listView;
 
     private NewsListPresenter newsListPresenter;
@@ -33,8 +33,6 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         if (newsListPresenter == null) {
             newsListPresenter = new NewsListPresenterImpl(this);
         }
-
-        newsListPresenter.getDocs();
     }
 
     @Nullable
@@ -44,6 +42,8 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        newsListPresenter.getDocs();
 
         return view;
     }
@@ -59,6 +59,21 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
     @Override
     public void onRefresh() {
         Log.d("Events", "Refresh!");
-//        TODO: Refresh data.
+        newsListPresenter.getDocs();
+    }
+
+    @Override
+    public void startRefresh() {
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+    }
+
+    @Override
+    public void stopRefresh() {
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

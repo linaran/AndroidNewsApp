@@ -22,11 +22,13 @@ public final class NewsListPresenterImpl implements NewsListPresenter, Callback<
 
     public NewsListPresenterImpl(NewsListView newsListView) {
         nyTimesService = new NYTimesServiceImpl();
-        newsListViewWeakReference = new WeakReference<NewsListView>(newsListView);
+        newsListViewWeakReference = new WeakReference<>(newsListView);
     }
 
     public void getDocs() {
-//        TODO: Start loading animation.
+        final NewsListView view = newsListViewWeakReference.get();
+        view.startRefresh();
+
         nyTimesService.getArticles(this); //Begin async call.
     }
 
@@ -37,8 +39,13 @@ public final class NewsListPresenterImpl implements NewsListPresenter, Callback<
 //        if (documents.size() == 0) {
 ////            TODO: Do something GUI.
 //        }
+
 //        TODO: Do something GUI.
-//        TODO: End loading animation.
+
+        final NewsListView view = newsListViewWeakReference.get();
+        if (view != null) {
+            view.stopRefresh();
+        }
     }
 
     @Override
