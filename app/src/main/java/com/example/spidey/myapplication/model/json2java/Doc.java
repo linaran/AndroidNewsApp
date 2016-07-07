@@ -10,57 +10,75 @@ public final class Doc {
     @SerializedName("web_url")
     @Expose
     private String webUrl;
+
     @SerializedName("snippet")
     @Expose
     private String snippet;
+
     @SerializedName("lead_paragraph")
     @Expose
     private String leadParagraph;
+
     @SerializedName("abstract")
     @Expose
     private Object _abstract;
+
     @SerializedName("print_page")
     @Expose
     private Object printPage;
+
     @SerializedName("blog")
     @Expose
-    private List<Object> blog = new ArrayList<Object>();
+    private List<Object> blog = new ArrayList<>();
+
     @SerializedName("source")
     @Expose
     private String source;
+
     @SerializedName("multimedia")
     @Expose
     private List<Multimedium> multimedia = new ArrayList<>();
+
     @SerializedName("headline")
     @Expose
     private Headline headline;
+
     @SerializedName("keywords")
     @Expose
     private List<Object> keywords = new ArrayList<>();
+
     @SerializedName("pub_date")
     @Expose
     private String pubDate;
+
     @SerializedName("document_type")
     @Expose
     private String documentType;
+
     @SerializedName("news_desk")
     @Expose
     private String newsDesk;
+
     @SerializedName("section_name")
     @Expose
     private String sectionName;
+
     @SerializedName("subsection_name")
     @Expose
     private Object subsectionName;
+
     @SerializedName("type_of_material")
     @Expose
     private String typeOfMaterial;
+
     @SerializedName("_id")
     @Expose
     private String id;
+
     @SerializedName("word_count")
     @Expose
     private String wordCount;
+
     @SerializedName("slideshow_credits")
     @Expose
     private Object slideshowCredits;

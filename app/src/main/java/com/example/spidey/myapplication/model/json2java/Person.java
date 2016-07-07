@@ -7,18 +7,23 @@ public final class Person {
     @SerializedName("firstname")
     @Expose
     private String firstname;
+
     @SerializedName("middlename")
     @Expose
     private String middlename;
+
     @SerializedName("lastname")
     @Expose
     private String lastname;
+
     @SerializedName("rank")
     @Expose
     private Integer rank;
+
     @SerializedName("role")
     @Expose
     private String role;
+
     @SerializedName("organization")
     @Expose
     private String organization;

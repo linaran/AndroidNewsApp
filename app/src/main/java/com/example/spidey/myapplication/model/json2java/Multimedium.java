@@ -7,18 +7,23 @@ public final class Multimedium {
     @SerializedName("width")
     @Expose
     private Integer width;
+
     @SerializedName("url")
     @Expose
     private String url;
+
     @SerializedName("height")
     @Expose
     private Integer height;
+
     @SerializedName("subtype")
     @Expose
     private String subtype;
+
     @SerializedName("legacy")
     @Expose
     private Legacy legacy;
+
     @SerializedName("type")
     @Expose
     private String type;

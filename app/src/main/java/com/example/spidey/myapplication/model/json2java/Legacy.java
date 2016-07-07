@@ -7,9 +7,11 @@ public final class Legacy {
     @SerializedName("thumbnailheight")
     @Expose
     private String thumbnailheight;
+
     @SerializedName("thumbnail")
     @Expose
     private String thumbnail;
+
     @SerializedName("thumbnailwidth")
     @Expose
     private String thumbnailwidth;

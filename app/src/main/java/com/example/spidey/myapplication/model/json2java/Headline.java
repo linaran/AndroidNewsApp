@@ -7,6 +7,7 @@ public final class Headline {
     @SerializedName("main")
     @Expose
     private String main;
+
     @SerializedName("content_kicker")
     @Expose
     private String contentKicker;
