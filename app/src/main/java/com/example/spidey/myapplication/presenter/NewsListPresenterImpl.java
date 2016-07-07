@@ -27,9 +27,11 @@ public final class NewsListPresenterImpl implements NewsListPresenter, Callback<
 
     public void getDocs() {
         final NewsListView view = newsListViewWeakReference.get();
-        view.startRefresh();
+        if (view != null) {
+            view.startRefresh();
+        }
 
-        nyTimesService.getArticles(this); //Begin async call.
+        nyTimesService.getDocs(this); //Begin async call.
     }
 
     @Override

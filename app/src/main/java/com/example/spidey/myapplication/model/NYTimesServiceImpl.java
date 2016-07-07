@@ -24,7 +24,7 @@ public final class NYTimesServiceImpl implements NYTimesService {
         nyTimesAPI = retrofit.create(NYTimesAPI.class);
     }
 
-    public void getArticles(final Callback<NYTimesResponse> callback) {
+    public void getDocs(final Callback<NYTimesResponse> callback) {
         final Call<NYTimesResponse> call = nyTimesAPI.getResponse();
         call.enqueue(callback);
     }

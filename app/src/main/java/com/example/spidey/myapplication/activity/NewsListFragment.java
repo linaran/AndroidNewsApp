@@ -8,11 +8,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.example.spidey.myapplication.R;
+import com.example.spidey.myapplication.model.json2java.Doc;
 import com.example.spidey.myapplication.presenter.NewsListPresenter;
 import com.example.spidey.myapplication.presenter.NewsListPresenterImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +28,7 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
     @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @BindView(R.id.newsList)
+    @BindView(R.id.newsListView)
     ListView listView;
 
     private NewsListPresenter newsListPresenter;
@@ -38,12 +44,13 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_news_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_news_list, container, false);
         ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
         newsListPresenter.getDocs();
+        listView.setAdapter(new NewsListViewAdapter(getContext(), R.layout.news_list_item_view, new ArrayList<Doc>()));
 
         return view;
     }
@@ -75,5 +82,14 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
     @Override
     public void stopRefresh() {
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void renderDocs(List<Doc> documents) {
+        final NewsListViewAdapter adapter = (NewsListViewAdapter) listView.getAdapter();
+
+        adapter.clear();
+        adapter.addAll(documents);
+        adapter.notifyDataSetChanged();
     }
 }

@@ -5,5 +5,5 @@ import com.example.spidey.myapplication.model.json2java.NYTimesResponse;
 import retrofit2.Callback;
 
 public interface NYTimesService {
-    void getArticles(Callback<NYTimesResponse> callback);
+    void getDocs(Callback<NYTimesResponse> callback);
 }

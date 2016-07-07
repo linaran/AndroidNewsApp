@@ -12,19 +12,31 @@ public final class Headline {
     @Expose
     private String contentKicker;
 
+    @SerializedName("print_headline")
+    @Expose
+    private String printHeadline;
+
     public String getMain() {
         return main;
     }
-    
+
     public void setMain(String main) {
         this.main = main;
     }
-    
+
     public String getContentKicker() {
         return contentKicker;
     }
-    
+
     public void setContentKicker(String contentKicker) {
         this.contentKicker = contentKicker;
+    }
+
+    public String getPrintHeadline() {
+        return printHeadline;
+    }
+
+    public void setPrintHeadline(String printHeadline) {
+        this.printHeadline = printHeadline;
     }
 }
