@@ -11,16 +11,10 @@ public final class Response {
     @Expose
     private List<Doc> docs = new ArrayList<>();
 
-    /**
-     * @return The docs
-     */
     public List<Doc> getDocs() {
         return docs;
     }
 
-    /**
-     * @param docs The docs
-     */
     public void setDocs(List<Doc> docs) {
         this.docs = docs;
     }

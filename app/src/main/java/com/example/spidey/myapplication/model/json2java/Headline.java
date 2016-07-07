@@ -12,30 +12,18 @@ public final class Headline {
     @Expose
     private String contentKicker;
 
-    /**
-     * @return The main
-     */
     public String getMain() {
         return main;
     }
-
-    /**
-     * @param main The main
-     */
+    
     public void setMain(String main) {
         this.main = main;
     }
-
-    /**
-     * @return The contentKicker
-     */
+    
     public String getContentKicker() {
         return contentKicker;
     }
-
-    /**
-     * @param contentKicker The content_kicker
-     */
+    
     public void setContentKicker(String contentKicker) {
         this.contentKicker = contentKicker;
     }
