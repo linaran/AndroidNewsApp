@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 
 public final class NewsListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    private NewsListPresenter presenter;
+    private NewsListPresenter newsListPresenter;
 
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
@@ -24,11 +24,13 @@ public final class NewsListActivity extends AppCompatActivity implements SwipeRe
         setContentView(R.layout.activity_news_list);
         ButterKnife.bind(this);
 
-        if (presenter == null) {
-            presenter = new NewsListPresenterImpl();
+        if (newsListPresenter == null) {
+            newsListPresenter = new NewsListPresenterImpl();
         }
 
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        newsListPresenter.getDocs();
     }
 
     @Override

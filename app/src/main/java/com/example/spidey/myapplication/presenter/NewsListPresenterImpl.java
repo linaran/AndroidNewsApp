@@ -1,39 +1,44 @@
 package com.example.spidey.myapplication.presenter;
 
-import com.example.spidey.myapplication.model.NYTimesService;
-import com.example.spidey.myapplication.model.json2java.Doc;
-import com.example.spidey.myapplication.model.NYTimesServiceImpl;
+import android.util.Log;
 
-import java.io.IOException;
+import com.example.spidey.myapplication.model.NYTimesService;
+import com.example.spidey.myapplication.model.NYTimesServiceImpl;
+import com.example.spidey.myapplication.model.json2java.Doc;
+import com.example.spidey.myapplication.model.json2java.NYTimesResponse;
+
 import java.util.List;
 
-public final class NewsListPresenterImpl implements NewsListPresenter {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public final class NewsListPresenterImpl implements NewsListPresenter, Callback<NYTimesResponse> {
 
     private NYTimesService nyTimesService;
 
     public NewsListPresenterImpl() {
-        nyTimesService = new NYTimesServiceImpl();
+        nyTimesService = new NYTimesServiceImpl(this);
     }
 
-    public List<Doc> getDocs() {
-
+    public void getDocs() {
 //        TODO: Start loading animation.
-
-        List<Doc> documents = null;
-        try {
-            documents = nyTimesService.getArticles();
-        } catch (IOException e) {
-            //        TODO: GUI handle IOException.
-            e.printStackTrace();
-        }
-
-        if (documents == null || documents.size() == 0) {
-            throw new NullPointerException("No data to be pulled from the endpoint.");
-        }
-//        Log.d("DATA", documents.toString());
-
+        nyTimesService.getArticles(); //Begin async call.
 //        TODO: End loading animation.
+    }
 
-        return documents;
+    @Override
+    public void onResponse(Call<NYTimesResponse> call, Response<NYTimesResponse> response) {
+        List<Doc> documents = response.body().getResponse().getDocs();
+        Log.d("DOCS", documents.toString());
+//        if (documents.size() == 0) {
+////            TODO: Do something GUI.
+//        }
+//        TODO: Do something GUI.
+    }
+
+    @Override
+    public void onFailure(Call<NYTimesResponse> call, Throwable t) {
+//        TODO: Do something GUI.
     }
 }
