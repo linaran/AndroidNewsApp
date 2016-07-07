@@ -12,7 +12,7 @@ import com.example.spidey.myapplication.presenter.NewsListPresenterImpl;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewsListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public final class NewsListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private NewsListPresenter presenter;
 

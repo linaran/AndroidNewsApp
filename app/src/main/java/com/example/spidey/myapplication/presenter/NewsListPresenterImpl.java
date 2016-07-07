@@ -7,7 +7,7 @@ import com.example.spidey.myapplication.model.NYTimesServiceImpl;
 import java.io.IOException;
 import java.util.List;
 
-public class NewsListPresenterImpl implements NewsListPresenter {
+public final class NewsListPresenterImpl implements NewsListPresenter {
 
     private NYTimesService nyTimesService;
 

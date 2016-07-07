@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Doc {
+public final class Doc {
     @SerializedName("web_url")
     @Expose
     private String webUrl;

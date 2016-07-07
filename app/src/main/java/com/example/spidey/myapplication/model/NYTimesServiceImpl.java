@@ -12,8 +12,8 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NYTimesServiceImpl implements NYTimesService{
-    private NYTimesAPI nyTimesAPI;
+public final class NYTimesServiceImpl implements NYTimesService{
+    private final NYTimesAPI nyTimesAPI;
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
     public NYTimesServiceImpl() {

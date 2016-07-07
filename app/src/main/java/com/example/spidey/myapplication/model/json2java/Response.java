@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Response {
+public final class Response {
     @SerializedName("docs")
     @Expose
     private List<Doc> docs = new ArrayList<>();

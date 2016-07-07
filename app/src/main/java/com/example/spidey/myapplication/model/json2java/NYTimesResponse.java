@@ -3,7 +3,7 @@ package com.example.spidey.myapplication.model.json2java;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class NYTimesResponse {
+public final class NYTimesResponse {
     @SerializedName("response")
     @Expose
     private Response response;
