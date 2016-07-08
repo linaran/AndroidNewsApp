@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,7 +31,7 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
     ListView listView;
 
     @BindView(R.id.newslist_feed_unavailable)
-    FrameLayout feedUnavailable;
+    TextView feedUnavailable;
 
     private NewsListPresenter newsListPresenter;
 
@@ -86,6 +85,9 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void showFeedUnavailable() {
+        final NewsListViewAdapter adapter = (NewsListViewAdapter) listView.getAdapter();
+        adapter.clear();
+        adapter.notifyDataSetChanged();
         feedUnavailable.setVisibility(View.VISIBLE);
     }
 

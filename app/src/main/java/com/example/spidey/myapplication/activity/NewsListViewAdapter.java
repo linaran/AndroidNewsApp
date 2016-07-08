@@ -5,10 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.spidey.myapplication.R;
+import com.example.spidey.myapplication.model.NYTimesAPI;
 import com.example.spidey.myapplication.model.json2java.Doc;
+import com.example.spidey.myapplication.model.json2java.Multimedium;
+import com.example.spidey.myapplication.util.URLUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -20,6 +25,9 @@ public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
     public static final class ViewHolder {
         @BindView(R.id.newslist_listview_item_printheadline)
         TextView printHeadline;
+
+        @BindView(R.id.newslist_listview_item_image)
+        ImageView image;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -44,12 +52,26 @@ public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
 
         Doc item = getItem(position);
         if (item != null) {
-            String printHeadline = item.getHeadline().getPrintHeadline();
-            if (printHeadline == null || printHeadline.equals("null")) {
+            final String printHeadline = item.getHeadline().getPrintHeadline();
+            if (printHeadline == null || "null".equals(printHeadline)) {
                 viewHolder.printHeadline.setText(R.string.no_headline);
             } else {
                 viewHolder.printHeadline.setText(printHeadline);
             }
+
+            final List<Multimedium> multimedia = item.getMultimedia();
+            if (multimedia.size() != 0) {
+                final String imageRelativeURL = item.getMultimedia().get(0).getUrl();
+                Picasso
+                        .with(getContext())
+                        .load(URLUtils.makeURL(NYTimesAPI.BASE_WWW_URL, imageRelativeURL))
+                        .error(android.R.drawable.ic_menu_help)
+                        .into(viewHolder.image);
+            } else {
+                Picasso.with(getContext()).cancelRequest(viewHolder.image);
+            }
+        } else {
+            Picasso.with(getContext()).cancelRequest(viewHolder.image);
         }
 
         return convertView;
