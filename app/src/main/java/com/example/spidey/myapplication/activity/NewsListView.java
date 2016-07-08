@@ -9,5 +9,9 @@ public interface NewsListView {
 
     void stopRefresh();
 
+    void showFeedUnavailable();
+
+    void hideFeedUnavailable();
+
     void renderDocs(List<Doc> documents);
 }

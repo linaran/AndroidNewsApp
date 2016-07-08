@@ -8,9 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.spidey.myapplication.R;
 import com.example.spidey.myapplication.model.json2java.Doc;
@@ -25,11 +25,14 @@ import butterknife.ButterKnife;
 
 public final class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NewsListView {
 
-    @BindView(R.id.swipeRefresh)
+    @BindView(R.id.newslist_swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @BindView(R.id.newsListView)
+    @BindView(R.id.newslist_listview)
     ListView listView;
+
+    @BindView(R.id.newslist_feed_unavailable)
+    FrameLayout feedUnavailable;
 
     private NewsListPresenter newsListPresenter;
 
@@ -50,22 +53,14 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         swipeRefreshLayout.setOnRefreshListener(this);
 
         newsListPresenter.getDocs();
-        listView.setAdapter(new NewsListViewAdapter(getContext(), R.layout.news_list_item_view, new ArrayList<Doc>()));
+        listView.setAdapter(new NewsListViewAdapter(getContext(), new ArrayList<Doc>()));
 
         return view;
     }
 
-//    public static NewsListFragment newInstance() {
-////        Bundle action.
-//        NewsListFragment fragment = new NewsListFragment();
-////        fragment.setArguments();
-//
-//        return fragment;
-//    }
-
     @Override
     public void onRefresh() {
-        Log.d("Events", "Refresh!");
+        Log.d("DOCS", "Refresh!");
         newsListPresenter.getDocs();
     }
 
@@ -81,15 +76,39 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void stopRefresh() {
-        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void showFeedUnavailable() {
+        feedUnavailable.setVisibility(View.VISIBLE);
+    }
+
+//    I'm not calling this anywhere but it seems silly to have an interface
+//    where you can show a message but can't hide it.
+    @Override
+    public void hideFeedUnavailable() {
+        feedUnavailable.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void renderDocs(List<Doc> documents) {
+//        I could call hideFeedUnavailable here.
+        if (feedUnavailable.getVisibility() == View.VISIBLE) {
+            swipeRefreshLayout.setVisibility(View.VISIBLE);
+            feedUnavailable.setVisibility(View.INVISIBLE);
+        }
+
         final NewsListViewAdapter adapter = (NewsListViewAdapter) listView.getAdapter();
 
         adapter.clear();
         adapter.addAll(documents);
         adapter.notifyDataSetChanged();
+        Log.d("DOCS", documents.toString());
     }
 }

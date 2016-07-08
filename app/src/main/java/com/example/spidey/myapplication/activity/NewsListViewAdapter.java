@@ -12,26 +12,31 @@ import com.example.spidey.myapplication.model.json2java.Doc;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
 
-    private static final class ViewHolder {
-        private TextView itemView;
+    public static final class ViewHolder {
+        @BindView(R.id.newslist_listview_item_printheadline)
+        TextView printHeadline;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
-    public NewsListViewAdapter(Context context, int resource, List<Doc> objects) {
-        super(context, resource, objects);
+    public NewsListViewAdapter(Context context, List<Doc> objects) {
+        super(context, R.layout.news_listview_item, objects);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.news_list_item_view, parent, false);
-
-            viewHolder = new ViewHolder();
-            viewHolder.itemView = (TextView) convertView.findViewById(R.id.newsListItemView);
-
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.news_listview_item, parent, false);
+            viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -39,7 +44,12 @@ public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
 
         Doc item = getItem(position);
         if (item != null) {
-            viewHolder.itemView.setText(item.getHeadline().getPrintHeadline());
+            String printHeadline = item.getHeadline().getPrintHeadline();
+            if (printHeadline == null || printHeadline.equals("null")) {
+                viewHolder.printHeadline.setText(R.string.no_headline);
+            } else {
+                viewHolder.printHeadline.setText(printHeadline);
+            }
         }
 
         return convertView;

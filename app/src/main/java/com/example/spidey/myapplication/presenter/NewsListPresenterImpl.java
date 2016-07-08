@@ -37,21 +37,26 @@ public final class NewsListPresenterImpl implements NewsListPresenter, Callback<
     @Override
     public void onResponse(Call<NYTimesResponse> call, Response<NYTimesResponse> response) {
         final List<Doc> documents = response.body().getResponse().getDocs();
-        Log.d("DOCS", documents.toString());
-//        if (documents.size() == 0) {
-////            TODO: Do something GUI.
-//        }
-
-//        TODO: Do something GUI.
-
         final NewsListView view = newsListViewWeakReference.get();
+
         if (view != null) {
             view.stopRefresh();
+
+            if (documents.size() == 0) {
+                view.showFeedUnavailable();
+            } else {
+                view.renderDocs(documents);
+            }
         }
     }
 
     @Override
     public void onFailure(Call<NYTimesResponse> call, Throwable t) {
-//        TODO: Do something GUI.
+        final NewsListView view = newsListViewWeakReference.get();
+        if (view != null) {
+            view.showFeedUnavailable();
+            view.stopRefresh();
+        }
+        Log.d("DOCS", "Armageddon");
     }
 }
