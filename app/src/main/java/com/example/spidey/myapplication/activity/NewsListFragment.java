@@ -34,6 +34,7 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
     TextView feedUnavailable;
 
     private NewsListPresenter newsListPresenter;
+    private NewsListViewAdapter newsListViewAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +42,8 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         if (newsListPresenter == null) {
             newsListPresenter = new NewsListPresenterImpl(this);
         }
+
+        newsListViewAdapter = new NewsListViewAdapter(getContext(), new ArrayList<Doc>());
     }
 
     @Nullable
@@ -52,7 +55,7 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         swipeRefreshLayout.setOnRefreshListener(this);
 
         newsListPresenter.getDocs();
-        listView.setAdapter(new NewsListViewAdapter(getContext(), new ArrayList<Doc>()));
+        listView.setAdapter(newsListViewAdapter);
 
         return view;
     }
@@ -85,9 +88,8 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void showFeedUnavailable() {
-        final NewsListViewAdapter adapter = (NewsListViewAdapter) listView.getAdapter();
-        adapter.clear();
-        adapter.notifyDataSetChanged();
+        newsListViewAdapter.clear();
+        newsListViewAdapter.notifyDataSetChanged();
         feedUnavailable.setVisibility(View.VISIBLE);
     }
 
@@ -106,11 +108,9 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
             feedUnavailable.setVisibility(View.INVISIBLE);
         }
 
-        final NewsListViewAdapter adapter = (NewsListViewAdapter) listView.getAdapter();
-
-        adapter.clear();
-        adapter.addAll(documents);
-        adapter.notifyDataSetChanged();
+        newsListViewAdapter.clear();
+        newsListViewAdapter.addAll(documents);
+        newsListViewAdapter.notifyDataSetChanged();
         Log.d("DOCS", documents.toString());
     }
 }
