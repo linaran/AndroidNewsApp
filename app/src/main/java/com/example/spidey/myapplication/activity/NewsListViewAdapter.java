@@ -22,17 +22,7 @@ import butterknife.ButterKnife;
 
 public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
 
-    public static final class ViewHolder {
-        @BindView(R.id.newslist_listview_item_printheadline)
-        TextView printHeadline;
-
-        @BindView(R.id.newslist_listview_item_image)
-        ImageView image;
-
-        public ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
+    public static final String NO_PRINT_HEADLINE = "null";
 
     public NewsListViewAdapter(Context context, List<Doc> objects) {
         super(context, R.layout.news_listview_item, objects);
@@ -51,29 +41,45 @@ public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
         }
 
         Doc item = getItem(position);
-        if (item != null) {
-            final String printHeadline = item.getHeadline().getPrintHeadline();
-            if (printHeadline == null || "null".equals(printHeadline)) {
-                viewHolder.printHeadline.setText(R.string.no_headline);
-            } else {
-                viewHolder.printHeadline.setText(printHeadline);
-            }
-
-            final List<Multimedium> multimedia = item.getMultimedia();
-            if (multimedia.size() != 0) {
-                final String imageRelativeURL = item.getMultimedia().get(0).getUrl();
-                Picasso.with(getContext())
-                        .load(URLUtils.makeURL(NYTimesAPI.BASE_WWW_URL, imageRelativeURL))
-                        .placeholder(android.R.drawable.ic_menu_help)
-                        .error(android.R.drawable.ic_menu_help)
-                        .into(viewHolder.image);
-            } else {
-                Picasso.with(getContext()).load(android.R.drawable.ic_menu_help).into(viewHolder.image);
-            }
-        } else {
-            Picasso.with(getContext()).load(android.R.drawable.ic_menu_help).into(viewHolder.image);
-        }
+        viewHolder.fillView(getContext(), item);
 
         return convertView;
+    }
+
+    public static final class ViewHolder {
+        @BindView(R.id.newslist_listview_item_printheadline)
+        TextView printHeadline;
+
+        @BindView(R.id.newslist_listview_item_image)
+        ImageView image;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+
+        public void fillView(Context context, Doc item) {
+            if (item != null) {
+                final String headline = item.getHeadline().getPrintHeadline();
+                if (headline == null || NO_PRINT_HEADLINE.equals(headline)) {
+                    printHeadline.setText(R.string.no_headline);
+                } else {
+                    printHeadline.setText(headline);
+                }
+
+                final List<Multimedium> multimedia = item.getMultimedia();
+                if (multimedia.size() != 0) {
+                    final String imageRelativeURL = item.getMultimedia().get(0).getUrl();
+                    Picasso.with(context)
+                            .load(URLUtils.makeURL(NYTimesAPI.BASE_WWW_URL, imageRelativeURL))
+                            .placeholder(android.R.drawable.ic_menu_help)
+                            .error(android.R.drawable.ic_menu_help)
+                            .into(image);
+                } else {
+                    Picasso.with(context).load(android.R.drawable.ic_menu_help).into(image);
+                }
+            } else {
+                Picasso.with(context).load(android.R.drawable.ic_menu_help).into(image);
+            }
+        }
     }
 }
