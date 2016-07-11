@@ -18,13 +18,13 @@ public final class NYTimesServiceImpl implements NYTimesService {
                 .setDateFormat(DATE_FORMAT)
                 .create();
         final Retrofit retrofit = new Retrofit.Builder() //Local until further notice.
-                .baseUrl(NYTimesAPI.BASE_URL)
+                .baseUrl(NYTimesAPI.BASE_API_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         nyTimesAPI = retrofit.create(NYTimesAPI.class);
     }
 
-    public void getArticles(final Callback<NYTimesResponse> callback) {
+    public void getDocs(final Callback<NYTimesResponse> callback) {
         final Call<NYTimesResponse> call = nyTimesAPI.getResponse();
         call.enqueue(callback);
     }
