@@ -89,7 +89,6 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
     @Override
     public void showFeedUnavailable() {
         newsListViewAdapter.clear();
-        newsListViewAdapter.notifyDataSetChanged();
         feedUnavailable.setVisibility(View.VISIBLE);
     }
 
@@ -110,7 +109,6 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
         newsListViewAdapter.clear();
         newsListViewAdapter.addAll(documents);
-        newsListViewAdapter.notifyDataSetChanged();
         Log.d("DOCS", documents.toString());
     }
 }
