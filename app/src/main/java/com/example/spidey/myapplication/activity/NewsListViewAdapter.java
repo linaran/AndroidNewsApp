@@ -62,16 +62,16 @@ public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
             final List<Multimedium> multimedia = item.getMultimedia();
             if (multimedia.size() != 0) {
                 final String imageRelativeURL = item.getMultimedia().get(0).getUrl();
-                Picasso
-                        .with(getContext())
+                Picasso.with(getContext())
                         .load(URLUtils.makeURL(NYTimesAPI.BASE_WWW_URL, imageRelativeURL))
+                        .placeholder(android.R.drawable.ic_menu_help)
                         .error(android.R.drawable.ic_menu_help)
                         .into(viewHolder.image);
             } else {
-                Picasso.with(getContext()).cancelRequest(viewHolder.image);
+                Picasso.with(getContext()).load(android.R.drawable.ic_menu_help).into(viewHolder.image);
             }
         } else {
-            Picasso.with(getContext()).cancelRequest(viewHolder.image);
+            Picasso.with(getContext()).load(android.R.drawable.ic_menu_help).into(viewHolder.image);
         }
 
         return convertView;
