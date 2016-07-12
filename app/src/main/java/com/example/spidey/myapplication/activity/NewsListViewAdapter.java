@@ -57,11 +57,11 @@ public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
 
         public void fillView(Context context, Doc item) {
             if (item != null) {
-                printHeadline.setText(item.getHeadline().getPrintHeadline());
+                printHeadline.setText(item.getHeadline().getMain());
 
                 final List<Multimedium> multimedia = item.getMultimedia();
                 if (multimedia.size() != 0) {
-                    final String imageRelativeURL = item.getMultimedia().get(0).getUrl();
+                    final String imageRelativeURL = multimedia.get(0).getUrl();
                     Picasso.with(context)
                             .load(URLUtils.makeURL(NYTimesAPI.BASE_WWW_URL, imageRelativeURL))
                             .placeholder(android.R.drawable.ic_menu_help)

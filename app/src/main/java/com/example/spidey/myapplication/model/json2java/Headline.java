@@ -3,13 +3,12 @@ package com.example.spidey.myapplication.model.json2java;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.spidey.myapplication.R;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public final class Headline implements Parcelable {
 
-    public static final String NO_PRINT_HEADLINE = "No Headline";
+    public static final String NO_HEADLINE = "No Headline";
 
     @SerializedName("main")
     @Expose
@@ -54,7 +53,7 @@ public final class Headline implements Parcelable {
     }
 
     public String getMain() {
-        return main;
+        return (main == null || "".equals(main)) ? NO_HEADLINE : main;
     }
 
     public void setMain(String main) {
@@ -70,7 +69,7 @@ public final class Headline implements Parcelable {
     }
 
     public String getPrintHeadline() {
-        return (printHeadline == null || "".equals(printHeadline)) ? NO_PRINT_HEADLINE : printHeadline;
+        return (printHeadline == null || "".equals(printHeadline)) ? NO_HEADLINE : printHeadline;
     }
 
     public void setPrintHeadline(String printHeadline) {
