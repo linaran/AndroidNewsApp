@@ -1,6 +1,6 @@
 package com.example.spidey.myapplication.util;
 
-public class URLUtils {
+public final class URLUtils {
     private URLUtils() {
     }
 

@@ -53,7 +53,7 @@ public final class NewsDetailFragment extends Fragment {
         final Bundle args = getArguments();
         document = args.getParcelable(DOC_KEY);
         if (document == null) {
-            throw new NullPointerException("This fragment requires a Doc object in order to work properly.");
+            throw new IllegalArgumentException("This fragment requires a Doc object in order to work properly.");
         }
     }
 
@@ -64,7 +64,7 @@ public final class NewsDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         final List<Multimedium> multimedia = document.getMultimedia();
-        if (multimedia.size() != 0) {
+        if (multimedia != null && multimedia.size() != 0) {
             final String imageRelativeURL = multimedia.get(0).getUrl();
             Picasso.with(getContext())
                     .load(URLUtils.makeURL(NYTimesAPI.BASE_WWW_URL, imageRelativeURL))

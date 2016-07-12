@@ -60,7 +60,7 @@ public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
                 printHeadline.setText(item.getHeadline().getMain());
 
                 final List<Multimedium> multimedia = item.getMultimedia();
-                if (multimedia.size() != 0) {
+                if (multimedia != null && multimedia.size() != 0) {
                     final String imageRelativeURL = multimedia.get(0).getUrl();
                     Picasso.with(context)
                             .load(URLUtils.makeURL(NYTimesAPI.BASE_WWW_URL, imageRelativeURL))

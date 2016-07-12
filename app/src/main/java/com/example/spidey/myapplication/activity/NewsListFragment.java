@@ -28,6 +28,10 @@ import butterknife.OnItemClick;
 
 public final class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NewsListView, ListView.OnItemClickListener {
 
+    public interface NewsListListener {
+        void onDocSelected(Doc doc);
+    }
+
     @BindView(R.id.newslist_swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -39,6 +43,7 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
     private NewsListPresenter newsListPresenter;
     private NewsListViewAdapter newsListViewAdapter;
+    private NewsListListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +53,14 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         }
 
         newsListViewAdapter = new NewsListViewAdapter(getContext(), new ArrayList<Doc>());
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof NewsListListener) {
+            listener = (NewsListListener) context;
+        }
     }
 
     @Nullable
@@ -66,7 +79,6 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void onRefresh() {
-//        Log.d("DOCS", "Refresh!");
         newsListPresenter.getDocs();
     }
 
@@ -105,7 +117,6 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void renderDocs(List<Doc> documents) {
-//        I could call hideFeedUnavailable here.
         if (feedUnavailable.getVisibility() == View.VISIBLE) {
             swipeRefreshLayout.setVisibility(View.VISIBLE);
             feedUnavailable.setVisibility(View.INVISIBLE);
@@ -113,20 +124,15 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
         newsListViewAdapter.clear();
         newsListViewAdapter.addAll(documents);
-//        Log.d("DOCS", documents.toString());
     }
 
     @OnItemClick(R.id.newslist_listview)
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Doc item = newsListViewAdapter.getItem(position);
-        Log.d("DEBUG", "Selected item: " + item.toString());
 
-        Context activity = getActivity();
-        if (activity != null) {
-            Intent newsDetailIntent = new Intent(activity, NewsDetailActivity.class);
-            newsDetailIntent.putExtra(NewsDetailActivity.DOC_KEY, item);
-            startActivity(newsDetailIntent);
+        if (listener != null) {
+            listener.onDocSelected(item);
         }
     }
 }
