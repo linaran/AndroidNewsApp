@@ -22,8 +22,6 @@ import butterknife.ButterKnife;
 
 public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
 
-    public static final String NO_PRINT_HEADLINE = "null";
-
     public NewsListViewAdapter(Context context, List<Doc> objects) {
         super(context, R.layout.news_listview_item, objects);
     }
@@ -59,16 +57,11 @@ public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
 
         public void fillView(Context context, Doc item) {
             if (item != null) {
-                final String headline = item.getHeadline().getPrintHeadline();
-                if (headline == null || NO_PRINT_HEADLINE.equals(headline)) {
-                    printHeadline.setText(R.string.no_headline);
-                } else {
-                    printHeadline.setText(headline);
-                }
+                printHeadline.setText(item.getHeadline().getMain());
 
                 final List<Multimedium> multimedia = item.getMultimedia();
-                if (multimedia.size() != 0) {
-                    final String imageRelativeURL = item.getMultimedia().get(0).getUrl();
+                if (multimedia != null && multimedia.size() != 0) {
+                    final String imageRelativeURL = multimedia.get(0).getUrl();
                     Picasso.with(context)
                             .load(URLUtils.makeURL(NYTimesAPI.BASE_WWW_URL, imageRelativeURL))
                             .placeholder(android.R.drawable.ic_menu_help)

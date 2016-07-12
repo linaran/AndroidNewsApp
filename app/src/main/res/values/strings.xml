@@ -3,4 +3,8 @@
     <string name="no_headline">No Headline</string>
     <string name="feed_unavailable">Feed unavailable</string>
     <string name="empty">Empty</string>
+    <string name="title_example">Title Example</string>
+    <string name="lorem_ipsum">
+        Curabitur ullamcorper gravida sollicitudin. Nullam maximus gravida venenatis. Aenean vitae justo eget turpis accumsan iaculis. Mauris tempus tellus in ligula fringilla mattis. Donec ut augue vel ex tincidunt faucibus commodo non elit. Ut et elit odio. Maecenas sollicitudin tincidunt magna, quis posuere sem porta at. Fusce et commodo nunc, sed sodales magna. Nunc a feugiat sem, vel euismod ex. Ut eget accumsan nunc. Ut eget mollis augue, ut porta tellus. Duis nec enim quam. Cras sit amet efficitur est, in tempor nisl. Duis pellentesque semper viverra. Vivamus sit amet pellentesque libero.
+    </string>
 </resources>

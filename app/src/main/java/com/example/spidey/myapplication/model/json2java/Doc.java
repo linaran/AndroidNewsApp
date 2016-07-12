@@ -1,12 +1,16 @@
 package com.example.spidey.myapplication.model.json2java;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Doc {
+public final class Doc implements Parcelable {
+
     @SerializedName("web_url")
     @Expose
     private String webUrl;
@@ -34,6 +38,44 @@ public final class Doc {
     @SerializedName("_id")
     @Expose
     private String id;
+
+    protected Doc(Parcel in) {
+        webUrl = in.readString();
+        snippet = in.readString();
+        leadParagraph = in.readString();
+        source = in.readString();
+        multimedia = in.createTypedArrayList(Multimedium.CREATOR);
+        headline = in.readParcelable(Headline.class.getClassLoader());
+        id = in.readString();
+    }
+
+    public static final Creator<Doc> CREATOR = new Creator<Doc>() {
+        @Override
+        public Doc createFromParcel(Parcel in) {
+            return new Doc(in);
+        }
+
+        @Override
+        public Doc[] newArray(int size) {
+            return new Doc[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(webUrl);
+        dest.writeString(snippet);
+        dest.writeString(leadParagraph);
+        dest.writeString(source);
+        dest.writeTypedList(multimedia);
+        dest.writeParcelable(headline, flags);
+        dest.writeString(id);
+    }
 
     public String getWebUrl() {
         return webUrl;

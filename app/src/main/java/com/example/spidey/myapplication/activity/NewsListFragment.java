@@ -1,5 +1,7 @@
 package com.example.spidey.myapplication.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,8 +24,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
-public final class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NewsListView {
+public final class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NewsListView, ListView.OnItemClickListener {
+
+    public interface NewsListListener {
+        void onDocSelected(Doc doc);
+    }
 
     @BindView(R.id.newslist_swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -35,6 +43,7 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
     private NewsListPresenter newsListPresenter;
     private NewsListViewAdapter newsListViewAdapter;
+    private NewsListListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +53,14 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         }
 
         newsListViewAdapter = new NewsListViewAdapter(getContext(), new ArrayList<Doc>());
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof NewsListListener) {
+            listener = (NewsListListener) context;
+        }
     }
 
     @Nullable
@@ -62,7 +79,6 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void onRefresh() {
-        Log.d("DOCS", "Refresh!");
         newsListPresenter.getDocs();
     }
 
@@ -92,8 +108,8 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         feedUnavailable.setVisibility(View.VISIBLE);
     }
 
-//    I'm not calling this anywhere but it seems silly to have an interface
-//    where you can show a message but can't hide it.
+    //    I'm not calling this anywhere but it seems silly to have an interface
+    //    where you can show a message but can't hide it.
     @Override
     public void hideFeedUnavailable() {
         feedUnavailable.setVisibility(View.INVISIBLE);
@@ -101,7 +117,6 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void renderDocs(List<Doc> documents) {
-//        I could call hideFeedUnavailable here.
         if (feedUnavailable.getVisibility() == View.VISIBLE) {
             swipeRefreshLayout.setVisibility(View.VISIBLE);
             feedUnavailable.setVisibility(View.INVISIBLE);
@@ -109,6 +124,15 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
 
         newsListViewAdapter.clear();
         newsListViewAdapter.addAll(documents);
-        Log.d("DOCS", documents.toString());
+    }
+
+    @OnItemClick(R.id.newslist_listview)
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Doc item = newsListViewAdapter.getItem(position);
+
+        if (listener != null) {
+            listener.onDocSelected(item);
+        }
     }
 }
