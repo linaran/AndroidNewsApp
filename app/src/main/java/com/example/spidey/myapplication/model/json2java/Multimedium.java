@@ -1,9 +1,12 @@
 package com.example.spidey.myapplication.model.json2java;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public final class Multimedium {
+public final class Multimedium implements Parcelable {
     @SerializedName("width")
     @Expose
     private Integer width;
@@ -27,6 +30,36 @@ public final class Multimedium {
     @SerializedName("type")
     @Expose
     private String type;
+
+    protected Multimedium(Parcel in) {
+        url = in.readString();
+        subtype = in.readString();
+        type = in.readString();
+    }
+
+    public static final Creator<Multimedium> CREATOR = new Creator<Multimedium>() {
+        @Override
+        public Multimedium createFromParcel(Parcel in) {
+            return new Multimedium(in);
+        }
+
+        @Override
+        public Multimedium[] newArray(int size) {
+            return new Multimedium[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(url);
+        dest.writeString(subtype);
+        dest.writeString(type);
+    }
 
     public Integer getWidth() {
         return width;

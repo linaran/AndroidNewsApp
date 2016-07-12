@@ -22,8 +22,6 @@ import butterknife.ButterKnife;
 
 public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
 
-    public static final String NO_PRINT_HEADLINE = "null";
-
     public NewsListViewAdapter(Context context, List<Doc> objects) {
         super(context, R.layout.news_listview_item, objects);
     }
@@ -59,12 +57,7 @@ public final class NewsListViewAdapter extends ArrayAdapter<Doc> {
 
         public void fillView(Context context, Doc item) {
             if (item != null) {
-                final String headline = item.getHeadline().getPrintHeadline();
-                if (headline == null || NO_PRINT_HEADLINE.equals(headline)) {
-                    printHeadline.setText(R.string.no_headline);
-                } else {
-                    printHeadline.setText(headline);
-                }
+                printHeadline.setText(item.getHeadline().getPrintHeadline());
 
                 final List<Multimedium> multimedia = item.getMultimedia();
                 if (multimedia.size() != 0) {

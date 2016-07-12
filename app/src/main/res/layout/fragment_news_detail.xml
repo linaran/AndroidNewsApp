@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/news_detail_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/news_detail_image_height"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:drawable/bottom_bar" />
+
+    <TextView
+        android:id="@+id/news_detail_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/news_detail_image"
+        android:layout_marginLeft="@dimen/news_detail_title_margin"
+        android:layout_marginStart="@dimen/news_detail_title_margin"
+        android:layout_marginTop="@dimen/news_detail_title_margin"
+        android:text="@string/title_example"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/news_detail_title">
+
+        <TextView
+            android:id="@+id/news_detail_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/news_detail_text_margin"
+            android:text="@string/lorem_ipsum" />
+    </FrameLayout>
+
+
+</RelativeLayout>
