@@ -22,9 +22,9 @@
         android:layout_marginStart="@dimen/news_detail_title_margin"
         android:layout_marginTop="@dimen/news_detail_title_margin"
         android:text="@string/title_example"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -37,8 +37,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="@dimen/news_detail_text_margin"
-            android:text="@string/lorem_ipsum" />
-    </FrameLayout>
+            android:text="@string/lorem_ipsum"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </ScrollView>
 
 
 </RelativeLayout>
