@@ -1,4 +1,4 @@
-package com.example.spidey.myapplication.model.json2java;
+package com.example.spidey.myapplication.model.net.json2java;
 
 import android.os.Parcel;
 import android.os.Parcelable;

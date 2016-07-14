@@ -1,6 +1,6 @@
-package com.example.spidey.myapplication.model;
+package com.example.spidey.myapplication.model.net;
 
-import com.example.spidey.myapplication.model.json2java.NYTimesResponse;
+import com.example.spidey.myapplication.model.net.json2java.NYTimesResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

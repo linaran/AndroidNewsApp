@@ -1,6 +1,6 @@
 package com.example.spidey.myapplication.activity;
 
-import com.example.spidey.myapplication.model.json2java.Doc;
+import com.example.spidey.myapplication.model.net.json2java.Doc;
 
 import java.util.List;
 

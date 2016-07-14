@@ -3,7 +3,7 @@ package com.example.spidey.myapplication.activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
-import com.example.spidey.myapplication.model.json2java.Doc;
+import com.example.spidey.myapplication.model.net.json2java.Doc;
 
 public final class NewsListActivity extends SingleFragmentActivity implements NewsListFragment.NewsListListener {
     @Override

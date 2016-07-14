@@ -3,10 +3,10 @@ package com.example.spidey.myapplication.presenter;
 import android.util.Log;
 
 import com.example.spidey.myapplication.activity.NewsListView;
-import com.example.spidey.myapplication.model.NYTimesService;
-import com.example.spidey.myapplication.model.NYTimesServiceImpl;
-import com.example.spidey.myapplication.model.json2java.Doc;
-import com.example.spidey.myapplication.model.json2java.NYTimesResponse;
+import com.example.spidey.myapplication.model.net.NYTimesService;
+import com.example.spidey.myapplication.model.net.NYTimesServiceImpl;
+import com.example.spidey.myapplication.model.net.json2java.Doc;
+import com.example.spidey.myapplication.model.net.json2java.NYTimesResponse;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

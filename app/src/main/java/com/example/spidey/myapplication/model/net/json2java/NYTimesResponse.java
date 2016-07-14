@@ -1,4 +1,4 @@
-package com.example.spidey.myapplication.model.json2java;
+package com.example.spidey.myapplication.model.net.json2java;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

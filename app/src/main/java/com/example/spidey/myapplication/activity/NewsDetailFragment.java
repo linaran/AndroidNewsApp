@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.spidey.myapplication.R;
-import com.example.spidey.myapplication.model.NYTimesAPI;
-import com.example.spidey.myapplication.model.json2java.Doc;
-import com.example.spidey.myapplication.model.json2java.Multimedium;
+import com.example.spidey.myapplication.model.net.NYTimesAPI;
+import com.example.spidey.myapplication.model.net.json2java.Doc;
+import com.example.spidey.myapplication.model.net.json2java.Multimedium;
 import com.example.spidey.myapplication.util.URLUtils;
 import com.squareup.picasso.Picasso;
 
