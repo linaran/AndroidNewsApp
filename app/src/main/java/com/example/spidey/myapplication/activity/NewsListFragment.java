@@ -1,12 +1,10 @@
 package com.example.spidey.myapplication.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +18,7 @@ import com.example.spidey.myapplication.activity.dagger.ComponentFactory;
 import com.example.spidey.myapplication.activity.dagger.FragmentComponent;
 import com.example.spidey.myapplication.model.json2java.Doc;
 import com.example.spidey.myapplication.presenter.NewsListPresenter;
-import com.example.spidey.myapplication.presenter.NewsListPresenterImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,7 +26,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
-import dagger.Component;
 
 public final class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NewsListView, ListView.OnItemClickListener {
 
@@ -50,8 +45,10 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
     @Inject
     NewsListPresenter newsListPresenter;
 
+    @Inject
+    NewsListViewAdapter newsListViewAdapter;
+
     private FragmentComponent fragmentComponent;
-    private NewsListViewAdapter newsListViewAdapter;
     private NewsListListener listener;
 
     @Override
@@ -63,8 +60,6 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         }
 
         fragmentComponent.inject(this);
-
-        newsListViewAdapter = new NewsListViewAdapter(getContext(), new ArrayList<Doc>());
     }
 
     @Override
@@ -146,9 +141,5 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         if (listener != null) {
             listener.onDocSelected(item);
         }
-    }
-
-    public FragmentComponent getFragmentComponent() {
-        return fragmentComponent;
     }
 }

@@ -1,7 +1,6 @@
 package com.example.spidey.myapplication.activity.dagger;
 
 import com.example.spidey.myapplication.NewsApplication;
-import com.example.spidey.myapplication.model.NYTimesAPI;
 import com.example.spidey.myapplication.model.NYTimesService;
 
 import javax.inject.Singleton;
@@ -19,9 +18,9 @@ public interface ApplicationComponent extends ApplicationComponentInjects, Appli
         private Initializer() {
         }
 
-        static public ApplicationComponent init(NewsApplication newsApplication) {
+        static public ApplicationComponent init(NewsApplication newsApplication, String baseURL) {
             return DaggerApplicationComponent.builder()
-                    .applicationModule(new ApplicationModule(newsApplication, NYTimesAPI.BASE_API_URL, NYTimesService.DATE_FORMAT))
+                    .applicationModule(new ApplicationModule(newsApplication, baseURL, NYTimesService.DATE_FORMAT))
                     .build();
         }
     }
