@@ -14,7 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.spidey.myapplication.NewsApplication;
 import com.example.spidey.myapplication.R;
+import com.example.spidey.myapplication.activity.dagger.ComponentFactory;
+import com.example.spidey.myapplication.activity.dagger.FragmentComponent;
 import com.example.spidey.myapplication.model.json2java.Doc;
 import com.example.spidey.myapplication.presenter.NewsListPresenter;
 import com.example.spidey.myapplication.presenter.NewsListPresenterImpl;
@@ -22,9 +25,12 @@ import com.example.spidey.myapplication.presenter.NewsListPresenterImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
+import dagger.Component;
 
 public final class NewsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NewsListView, ListView.OnItemClickListener {
 
@@ -41,16 +47,22 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
     @BindView(R.id.newslist_feed_unavailable)
     TextView feedUnavailable;
 
-    private NewsListPresenter newsListPresenter;
+    @Inject
+    NewsListPresenter newsListPresenter;
+
+    private FragmentComponent fragmentComponent;
     private NewsListViewAdapter newsListViewAdapter;
     private NewsListListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (newsListPresenter == null) {
-            newsListPresenter = new NewsListPresenterImpl(this);
+        if (fragmentComponent == null) {
+            final NewsApplication application = (NewsApplication) getActivity().getApplication();
+            fragmentComponent = ComponentFactory.createFragmentComponent(this, application);
         }
+
+        fragmentComponent.inject(this);
 
         newsListViewAdapter = new NewsListViewAdapter(getContext(), new ArrayList<Doc>());
     }
@@ -134,5 +146,9 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
         if (listener != null) {
             listener.onDocSelected(item);
         }
+    }
+
+    public FragmentComponent getFragmentComponent() {
+        return fragmentComponent;
     }
 }

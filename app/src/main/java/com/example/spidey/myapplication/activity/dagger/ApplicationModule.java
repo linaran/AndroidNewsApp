@@ -1,5 +1,6 @@
 package com.example.spidey.myapplication.activity.dagger;
 
+import com.example.spidey.myapplication.NewsApplication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,7 +12,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class ApplicationModule {
+public final class ApplicationModule {
 
     private final NewsApplication newsApplication;
     private final String baseURL;
@@ -44,5 +45,9 @@ public class ApplicationModule {
                 .baseUrl(baseURL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
+    }
+
+    interface Expose {
+        Retrofit retrofit();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.spidey.myapplication.activity.dagger;
 
+import com.example.spidey.myapplication.NewsApplication;
 import com.example.spidey.myapplication.model.NYTimesAPI;
 import com.example.spidey.myapplication.model.NYTimesService;
 
@@ -13,7 +14,7 @@ import dagger.Component;
                 ApplicationModule.class
         }
 )
-public interface ApplicationComponent extends ApplicationComponentInjects {
+public interface ApplicationComponent extends ApplicationComponentInjects, ApplicationModule.Expose {
     final class Initializer {
         private Initializer() {
         }

@@ -1,17 +1,13 @@
-package com.example.spidey.myapplication.activity.dagger;
+package com.example.spidey.myapplication;
 
 import android.app.Application;
 
-import javax.inject.Inject;
+import com.example.spidey.myapplication.activity.dagger.ApplicationComponent;
+import com.example.spidey.myapplication.activity.dagger.ComponentFactory;
 
-import retrofit2.Retrofit;
-
-public class NewsApplication extends Application {
+public final class NewsApplication extends Application {
 
     private ApplicationComponent applicationComponent;
-
-    @Inject
-    Retrofit retrofit;
 
     @Override
     public void onCreate() {
@@ -23,9 +19,5 @@ public class NewsApplication extends Application {
 
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
-    }
-
-    public Retrofit getRetrofit() {
-        return retrofit;
     }
 }
