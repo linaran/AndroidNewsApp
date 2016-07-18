@@ -9,8 +9,8 @@ public final class ComponentFactory {
     private ComponentFactory() {
     }
 
-    public static ApplicationComponent createApplicationComponent(NewsApplication newsApplication, String baseURL) {
-        return ApplicationComponent.Initializer.init(newsApplication, baseURL);
+    public static ApplicationComponent createApplicationComponent(NewsApplication newsApplication) {
+        return ApplicationComponent.Initializer.init(newsApplication);
     }
 
     public static FragmentComponent createFragmentComponent(Fragment fragment,

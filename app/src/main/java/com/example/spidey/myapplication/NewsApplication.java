@@ -14,7 +14,7 @@ public final class NewsApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        applicationComponent = ComponentFactory.createApplicationComponent(this, NYTimesAPI.BASE_API_URL);
+        applicationComponent = ComponentFactory.createApplicationComponent(this);
         applicationComponent.inject(this);
     }
 

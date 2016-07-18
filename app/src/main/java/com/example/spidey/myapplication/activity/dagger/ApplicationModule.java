@@ -1,6 +1,7 @@
 package com.example.spidey.myapplication.activity.dagger;
 
 import com.example.spidey.myapplication.NewsApplication;
+import com.example.spidey.myapplication.model.NYTimesAPI;
 import com.example.spidey.myapplication.model.NYTimesService;
 import com.example.spidey.myapplication.model.NYTimesServiceImpl;
 import com.google.gson.Gson;
@@ -17,13 +18,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public final class ApplicationModule {
 
     private final NewsApplication newsApplication;
-    private final String baseURL;
-    private final String dateFormat;
 
-    public ApplicationModule(NewsApplication newsApplication, String baseURL, String dateFormat) {
+    public ApplicationModule(NewsApplication newsApplication) {
         this.newsApplication = newsApplication;
-        this.baseURL = baseURL;
-        this.dateFormat = dateFormat;
     }
 
     @Singleton
@@ -36,7 +33,7 @@ public final class ApplicationModule {
     @Singleton
     Gson provideGson() {
         return new GsonBuilder()
-                .setDateFormat(dateFormat)
+                .setDateFormat(NYTimesService.DATE_FORMAT)
                 .create();
     }
 
@@ -44,7 +41,7 @@ public final class ApplicationModule {
     @Singleton
     Retrofit provideRetrofit(Gson gson) {
         return new Retrofit.Builder()
-                .baseUrl(baseURL)
+                .baseUrl(NYTimesAPI.BASE_API_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
@@ -56,8 +53,6 @@ public final class ApplicationModule {
     }
 
     interface Expose {
-        Retrofit retrofit();
-
         NYTimesService nyTimesService();
     }
 }
