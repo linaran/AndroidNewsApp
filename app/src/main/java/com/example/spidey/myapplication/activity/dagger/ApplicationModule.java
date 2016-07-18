@@ -1,6 +1,8 @@
 package com.example.spidey.myapplication.activity.dagger;
 
 import com.example.spidey.myapplication.NewsApplication;
+import com.example.spidey.myapplication.model.NYTimesService;
+import com.example.spidey.myapplication.model.NYTimesServiceImpl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -47,7 +49,15 @@ public final class ApplicationModule {
                 .build();
     }
 
+    @Provides
+    @Singleton
+    NYTimesService provideNYTimesService(Retrofit retrofit) {
+        return new NYTimesServiceImpl(retrofit);
+    }
+
     interface Expose {
         Retrofit retrofit();
+
+        NYTimesService nyTimesService();
     }
 }

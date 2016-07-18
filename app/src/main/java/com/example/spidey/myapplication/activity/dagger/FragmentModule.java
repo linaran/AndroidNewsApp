@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import com.example.spidey.myapplication.activity.NewsListView;
 import com.example.spidey.myapplication.activity.NewsListViewAdapter;
 import com.example.spidey.myapplication.model.NYTimesService;
-import com.example.spidey.myapplication.model.NYTimesServiceImpl;
 import com.example.spidey.myapplication.model.json2java.Doc;
 import com.example.spidey.myapplication.presenter.NewsListPresenter;
 import com.example.spidey.myapplication.presenter.NewsListPresenterImpl;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Retrofit;
 
 @Module
 public final class FragmentModule {
@@ -23,12 +21,6 @@ public final class FragmentModule {
 
     public FragmentModule(Fragment fragment) {
         this.fragment = fragment;
-    }
-
-    @Provides
-    @FragmentScope
-    NYTimesService provideNYTimesService(Retrofit retrofit) {
-        return new NYTimesServiceImpl(retrofit);
     }
 
     @Provides
