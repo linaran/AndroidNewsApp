@@ -1,12 +1,10 @@
 package com.example.spidey.myapplication.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +12,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.spidey.myapplication.NewsApplication;
 import com.example.spidey.myapplication.R;
+import com.example.spidey.myapplication.activity.dagger.ComponentFactory;
+import com.example.spidey.myapplication.activity.dagger.FragmentComponent;
 import com.example.spidey.myapplication.model.json2java.Doc;
 import com.example.spidey.myapplication.presenter.NewsListPresenter;
-import com.example.spidey.myapplication.presenter.NewsListPresenterImpl;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,18 +42,24 @@ public final class NewsListFragment extends Fragment implements SwipeRefreshLayo
     @BindView(R.id.newslist_feed_unavailable)
     TextView feedUnavailable;
 
-    private NewsListPresenter newsListPresenter;
-    private NewsListViewAdapter newsListViewAdapter;
+    @Inject
+    NewsListPresenter newsListPresenter;
+
+    @Inject
+    NewsListViewAdapter newsListViewAdapter;
+
+    private FragmentComponent fragmentComponent;
     private NewsListListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (newsListPresenter == null) {
-            newsListPresenter = new NewsListPresenterImpl(this);
+        if (fragmentComponent == null) {
+            final NewsApplication application = (NewsApplication) getActivity().getApplication();
+            fragmentComponent = ComponentFactory.createFragmentComponent(this, application);
         }
 
-        newsListViewAdapter = new NewsListViewAdapter(getContext(), new ArrayList<Doc>());
+        fragmentComponent.inject(this);
     }
 
     @Override
