@@ -20,3 +20,4 @@ public final class NYTimesServiceImpl implements NYTimesService {
         call.enqueue(callback);
     }
 }
+
